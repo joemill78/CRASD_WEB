@@ -1,0 +1,243 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="dualspan">
+    <div class="dualspan_tabs_level1"></div>
+    <div class="dualspan_tabs_level2"></div>
+    <div class="dualspan_tabs_level3"></div>
+    <div class="dualspan_middle">
+
+
+    <h2>Available Monitoring Events:</h2>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      {% if 'Event' in message  %}
+        <li class="flashes">{{ message }}</li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<div style="overflow-x:auto">
+<form action="#" method="post">
+   <table id="datatable_vpn_tunnel" style="font-size:12px;" class="display" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+    <tr>
+	<th style="width:22px;"></th>
+		<th style="width:150px; text-align: center;">Event Type ID</th>
+		<th style="width:150px; text-align: center;">Event Description</th>
+		<th style="width:100px; text-align: center;">Monitor</th>
+	</tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+
+            </tr>
+        </tfoot>
+		<tbody><tr class="webengform">
+			{% for event in available_mon_events %}
+            <td>{{ loop.index }}.</td>
+			<td>{{ event.name }}</td>
+			<td>{{ event.description }}</td>
+			<td><select name="monitored" id="monitoring">
+                <option value="Yes"{% if event.monitor == 'Yes' %} selected="selected"{% endif %}>Yes</option>
+                <option value="No"{% if event.monitor == 'No' %} selected="selected"{% endif %}>No</option>
+            </select>
+             <script type="text/javascript">
+                 function get_response_monitor(events) {
+                     document.getElementById("monitoring").innerHTML = events.options[events.selectedIndex].innerHTML;
+                     document.getElementById("monitoring").value = events.value;
+                     
+                 }
+                </script>
+        </td>
+			</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+<input type='submit' value='Save'>
+</form>
+</div><br>
+
+<div style="float:left;"></div><div style="float:right;"></div>
+
+
+ <h2>Active Monitoring Events:</h2>
+<div style="overflow-x:auto">
+   <table id="datatable_vpn_tunnel" style="font-size:12px;" class="display" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+    <tr>
+	<th style="width:22px;"></th>
+		<th style="width:300px; text-align: center;">Event ID</th>
+		<th style="width:150px; text-align: center;">Event Type</th>
+		<th style="width:100px; text-align: center;">Resource</th>
+		<th style="width:190px; text-align: center;">Start Time</th>
+	</tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </tfoot>
+		<tbody><tr class="webengform">
+			{% for event in active_mon_events %}
+            <td>{{ loop.index }}.</td>
+			<td>{{ event.event_id }}</td>
+			<td>{{ event.name }}</td>
+			<td>{{ event.identifier }}</td>
+			<td>{{ event.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+			</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+</div><br>
+
+<div style="float:left;"></div><div style="float:right;"></div>
+
+<br>
+<h2>Active Reachability Events:</h2>
+<div style="overflow-x:auto">
+   <table id="datatable_vpn_tunnel" style="font-size:12px;" class="display" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+    <tr>
+	<th style="width:22px;"></th>
+		<th style="width:300px; text-align: center;">Event ID</th>
+		<th style="width:150px; text-align: center;">Device Name</th>
+		<th style="width:100px; text-align: center;">IP Address</th>
+		<th style="width:190px; text-align: center;">Start Time</th>
+	</tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </tfoot>
+
+		<tbody><tr class="webengform">
+			{% for event in active_reachability_events %}
+            <td>{{ loop.index }}.</td>
+            <td>{{ event.event_id }}</td>
+            <td>{{ event.name }}</td>
+            <td>{{ event.ip }}</td>
+            <td>{{ event.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+             {% endfor %}
+		</tbody>
+	</table>
+
+<br>
+<br>
+</div><!
+    </div>
+<h2>Historical Monitoring Events:</h2>
+<div style="overflow-x:auto">
+   <table id="datatable_vpn_tunnel" style="font-size:12px;" class="display" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+    <tr>
+	<th style="width:22px;"></th>
+		<th style="width:300px; text-align: center;">Event ID</th>
+		<th style="width:150px; text-align: center;">Event Type</th>
+		<th style="width:100px; text-align: center;">Resource</th>
+		<th style="width:190px; text-align: center;">Start Time</th>
+        <th style="width:190px; text-align: center;">Stop Time</th>
+
+	</tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </tfoot>
+
+		<tbody><tr class="webengform">
+
+           {% for event in monitoring %}
+                <td>{{ loop.index }}.</td>
+                <td>{{ event[0] }}</td>
+                <td>{{ event[1] }}</td>
+                <td>{{ event[2] }}</td>
+                <td>{{ event[3].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ event[4].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+
+                </tr>
+
+             {% endfor %}
+
+	</tbody></table>
+</div><br>
+
+
+<br>
+<h2>Historical Reachability Events:</h2>
+<div style="overflow-x:auto">
+   <table id="datatable_vpn_tunnel" style="font-size:12px;" class="display" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+    <tr>
+	<th style="width:22px;"></th>
+		<th style="width:300px; text-align: center;">Event ID</th>
+		<th style="width:150px; text-align: center;">Device Name</th>
+		<th style="width:100px; text-align: center;">IP Address</th>
+		<th style="width:190px; text-align: center;">Start Time</th>
+        <th style="width:190px; text-align: center;">Stop Time</th>
+
+	</tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </tfoot>
+
+       <tbody><tr class="webengform">
+
+           {% for event in reachability %}
+                <td>{{ loop.index }}.</td>
+                <td>{{ event[0] }}</td>
+                <td>{{ event[1] }}</td>
+                <td>{{ event[2] }}</td>
+                <td>{{ event[3].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ event[4].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+
+                </tr>
+
+             {% endfor %}
+	   </tbody></table>
+</div><br>
+<div style="float:left;"></div><div style="float:right;"></div>
+
+
+</div><!-- end content middle -->
+
+</div> <!-- end content -->
+
+{% endblock content %}

@@ -1,0 +1,186 @@
+/*
+orange: 		  ff7200
+orange highlight: fcb314
+light blue : 	  3aa5dc
+dark: 			  067ab4
+*/
+
+html {height: 100%;margin-bottom: 1px;/* Scroll Bar Fix by Patrick Lauke VIA Jon Hicks */	}
+body {margin:0px;font-family:Verdana, Geneva, sans-serif;font-size:14px;background-repeat:repeat-x;color:#333333;line-height:1.3em;}
+
+/*******************
+	Tags
+*******************/
+p{padding:0;line-height:1.6em;margin:10px 0 10px 0;}
+h1{font-size:22px;color:#333333;font-weight:normal;margin:0px 0 15px 0;padding-bottom:5px;}
+h2{font-size:16px;color:#ff7200;font-weight:bold;margin:20px 0 5px 0;}
+h3{font-size:14px;font-weight:bold;margin:20px 0 5px 0;color:#067ab4;}
+h4{font-size:11px;font-weight:bold;margin:20px 0 5px 0;}
+h5{font-size:11px;color:#ff7200;font-weight:bold;margin:20px 0 5px 0;}
+a{color:#0A94D6;text-decoration:none;cursor:pointer;}
+a img{border:0;}
+a:hover{text-decoration:underline}
+ul{list-style-type:square;margin:10px 0 10px 20px;}
+li {margin:3px 0 3px 5px;list-style-type:square;padding-left:5px;}
+strong {font-weight:bold;}
+
+/*******************
+	Layout
+*******************/
+.page_container{width:980px;margin:0px auto;font-size:12px;}
+#universal_links {margin:0 4px;min-height:5px;}
+#navbar {width:1000px;height:61px;background-image:url(./img/navbar_bg.png);	background-repeat:no-repeat;}
+#logo {float:left;padding:21px 13px 15px 150px;}
+/* Title Immediately right of logo */
+#department{padding:20px 0 13px 12px; margin:9px 0 0 0px;font-size:23px;font-weight:bold;text-align:center; }
+
+.content {margin-top:5px;}
+.contentbox_top {height:10px;background:url(./img/contentbox_top.png) no-repeat;margin:0px;font-size:1px;}
+.contentbox_middle {	float:left;width:980px;background-image:url(./img/contentbox_middle.png);	padding-top:0px;padding-bottom:4px;	margin:0px;	}
+.contentbox_bottom {	width:980px;	height:10px;	background-image:url(./img/contentbox_bottom.png);	background-repeat:no-repeat;margin:0px;	float:left;}
+
+.leftcolumn {	width:628px;	float:left;	margin-left:13px; }
+.rightcolumn {	width:320px;	float:right; margin-right:13px;}
+.left_col_half{width:48%;float:left;display:inline;}
+.right_col_half{float:right;width:48%;margin-left:10px;}
+
+/*******************
+	Main Menu
+*******************/
+
+#main_hnav {height: 38px;padding-left: 18px;background:url(./img/contentnav_bg2.png) no-repeat;margin-left: 0px;}
+#main_hnav li {float: left;list-style-image: none;list-style-type: none;padding:0; margin:0;}
+#main_hnav li a {float:left;font-size: 12px;line-height: 28px;margin-top: 5px;height: 28px;background:url(./img/contentnav_tab3.png) no-repeat;
+		padding: 0 15px;border-right:#067ab4 solid 1px;color: #fff;text-decoration: none;outline: none;}
+#main_hnav li a:hover {background:url(./img/contentnav_tab_hov2.png) no-repeat;text-decoration: none;outline: none;color: #333;}
+#main_hnav li.active a, #main_hnav li.active a:hover, #main_hnav li a:active {background: url(./img/contentnav_tab_sel2.png) no-repeat;outline: none;color: #333;}
+
+.moduleright_top_wide {height:10px; background:url(./img/moduleright_top_wide.png) top left no-repeat; font-size:1px;float:left;width:100%;}
+.moduleright_middle_wide {padding:5px 15px; background:url(./img/moduleright_middle_wide.png) repeat-y;	float:left;width:100%;min-height: 200px;} /* min height should match the height of the vertical nav bar*/
+.moduleright_bottom_wide {height:10px; background:url(./img/moduleright_bottom_wide.png) no-repeat;float:left;width:100%;}
+
+
+/*******************
+	Generic Modules
+*******************/
+
+.dualspan {width:954px; margin: 4px 0 0 13px;float:left; }
+.dualspan_top {height:10px;	background:url(./img/dualspan_top.png) no-repeat; font-size:1px;float:left;width:100%;}
+.dualspan_middle {padding:10px 15px 10px 15px; margin:0; background: url(./img/dualspan_middle.png) top left repeat-y;float:left;width:924px;}
+.dualspan_bottom {height:10px; background:url(./img/dualspan_bottom.png) top left no-repeat;float:left;width:100%;}
+
+
+
+.dualspan_tabs{background:url(./img/moduleleft_tab_bg_long.png) top left no-repeat;padding:5px 0 0 5px; color: #666666;float:left;width:100%; margin:0;height:28px;}
+.dualspan_tabs a {font-size: 12px;margin:0px;padding: 5px 10px;color: #333;text-decoration: none;outline: none;float:left;border-left:1px solid #ccc;}
+.dualspan_tabs a:hover {background:url(./img/20-dark.png) top left repeat; color:black;text-decoration: none;outline: none;}
+.dualspan_tabs  a.active , .dualspan_tabs a.active:hover{background:white;outline: none;color:black;}
+.dualspan_tabs  a:first-child{margin-left:6px;border-left:0;}
+
+.dualspan_tabs_level1 {background:url(./img/moduleleft_tab_bg_long_wide.png) top left no-repeat;padding:5px 0 0 5px; color: #666666;float:left;width:100%; margin:0;height:28px;}
+.dualspan_tabs_level1 a {font-size: 12px;margin:0px;padding: 5px 10px;color: #333;text-decoration: none;outline: none;float:left;border-left:1px solid #ccc;}
+.dualspan_tabs_level1 a:hover {background:url(./img/20-dark.png) top left repeat; color:black;text-decoration: none;outline: none;}
+.dualspan_tabs_level1  a.active , .dualspan_tabs_level1 a.active:hover{background:#dbe2ec;outline: none;color:#333;}
+.dualspan_tabs_level1  a:first-child{border-left:0;}
+.dualspan_tabs_level1  a:first-child:hover{background:url(./img/dark_corner.png) top left no-repeat;}
+.dualspan_tabs_level1  a.active:first-child , .dualspan_tabs_level1 a.active:first-child:hover{background:url(./img/blue_corner.png) top left no-repeat;}
+
+
+.dualspan_tabs_level2 {background-image: url(./img/dualspan_tabs_level_2_2.png);padding:0px 0 0 5px; color: white;float:left;width:100%; margin:0;}
+.dualspan_tabs_level2 a {font-size: 10px;margin:6px 0 0 1px;padding: 3px 8px;color: #333;text-decoration: none;outline: none;float:left;}
+.dualspan_tabs_level2 a:hover {background:url(./img/20-dark.png) top left repeat; color:black;text-decoration: none;outline: none;}
+.dualspan_tabs_level2  a.active , .dualspan_tabs_level2 a.active:hover{background:white;outline: none;color:black;}
+.dualspan_tabs_level2  a:first-child{border-left:0;}
+
+
+.dualspan_tabs_level3 {background-image: url(./img/dualspan_tabs_level_2_2.png);padding:0px 0 0 5px; color: white;float:left;width:100%; margin:0;}
+.dualspan_tabs_level3 a {font-size: 10px;margin:6px 0 0 1px;padding: 3px 8px;color: #333;text-decoration: none;outline: none;float:left;}
+.dualspan_tabs_level3 a:hover {background:url(./img/20-dark.png) top left repeat; color:black;text-decoration: none;outline: none;}
+.dualspan_tabs_level3  a.active , .dualspan_tabs_level2 a.active:hover{background:white;outline: none;color:black;}
+.dualspan_tabs_level3  a:first-child{border-left:0;}
+
+/*******************
+	Tables
+*******************/
+table{margin:15px 0;}
+td{border:1px solid #ddd;padding:5px;background-color:white;}
+thead tr th,th, thead tr td{background-color:#eee;}
+th {border:1px solid #ddd;padding:5px;font-weight:bold; color:#444;text-align:center;font-size:12px;}
+th.up {vertical-align:top;}
+th.mid {vertical-align:middle;}
+table.th_left  th {text-align:left}
+table.th_right  th {text-align:right}
+table.th_center  th {text-align:center}
+td.no_border, th.no_border {border:0;background:#fff;}
+table.no_margin {margin:0px 0;margin-left:-5px;}
+
+/* was already class name for most of tables containing forms */
+/* table.tablemaster td, table.tablemaster th{border:none;font-weight:normal;background-color:#fff;color:#666666;text-align:left;} */
+table.tablemaster td, table.tablemaster th{border:none;font-weight:normal;background-color:#fff;text-align:left;}
+
+table.tablemaster th {text-align:right;}
+
+tr.highlight{background-color:#F2FAFF;}
+table.no_pad td, table.no_pad th{ padding:3px;}
+table.full {width:100%}
+
+
+
+/*******************
+	Generic Classes
+*******************/
+.nopadtop { margin-top:0px; padding-top:0px;}
+.nopadbottom { margin-bottom:0px; padding-bottom:0px;}
+.gobtnblue {width:47px;height:18px;border:0;background: url(./img/btn_go.gif) 0 0 no-repeat transparent;cursor: pointer;}/* Blue GO Button */
+.legal{font-size:10;color:#999999;}
+.linefont0{line-height:0;font-size:0;}
+.paddingtoplarge{padding-top:20px;}
+.paddingtopmedium{padding-top:10px;}
+.paddingtopsmall{padding-top:5px;}
+.heightspacer{height:10px;}
+.innerlinespacer{height:7px;}
+.margintopmedium{margin-top:10px;}
+.floatleft { float:left; }
+.floatright { float:right; }
+.clearfloat {line-height:0px; height:0px; clear: both;}
+.clear {clear: both;}
+.cleardiv {clear:both;font-size:0px;height:0px;padding:0;margin:0;overflow: hidden;}
+.decimal.lispace li{margin-bottom:10px;}
+.indent15{margin-left:15px;}
+.hidden{display:none;height:1px;}
+.text_right {text-align:right}
+.quiet {color:#666; }
+.squeeze{font-size:.8em;line-height:1.2em;}
+.top_link_spacer {color:#aaa; font-size:1em;padding:0 5px;}
+.contrastcolor{color:#F27D00;}
+.noborder, #searchbox  a.noborder{border:0;}
+.orange_hr {border-bottom:1px solid #A24902; border-top:3px solid #ff7200;margin:30px 0;}
+.small { font-size:10px;}
+.invalid, .highlight, tr.invalid td {background-color:#FAFFB2;}
+.red {color:red;}
+/*******************
+	ICONS - royalty free with link: http://www.pinvoke.com/
+*******************/
+.arrow{background:url(./img/btn_arrow_box_white.gif);background-repeat:no-repeat;background-position:0px 2px !important;background-position:0px 2px ;line-height:17px;padding:2px 0 2px 21px;cursor:pointer;}
+.window{background:url(./img/btn_preview.gif);background-repeat:no-repeat;background-position:3px 5px !important;background-position:3px 5px ;line-height:17px;padding:2px 0 2px 21px;}
+.pdf{background:url(./img/btn_pdf.gif);background-repeat:no-repeat;background-position:3px 5px !important;background-position:3px 5px ;line-height:17px;padding:5px 0 0 21px;}
+.check {background:url(./icons/tick-circle-frame.png);background-repeat:no-repeat;line-height:17px;padding:0px 0 4px 25px;}
+
+
+/*******************
+	Buttons
+*******************/
+.button {	background-repeat: repeat-x;	float: left;	text-align: center;	height: 28px;	background-image: url(./img/generic_button_middle.gif);}
+.button_left {	height: 28px;	width: 5px;	float: left;	background-repeat: no-repeat;	background-image: url(./img/generic_button_left.gif);}
+.button_right {	height: 28px;	width: 5px;	float: right;	background-repeat: no-repeat;	background-image: url(./img/generic_button_right.gif);}
+.buttontext, a.buttontext, a.buttontext:hover, a.buttontext:visited, a.button_label, .button_label {	top: 2px;	position: relative;	width: 100%;
+	height: 28px;	color: white;	text-shadow: 0.5px 1px 1px #332818;	font-size: 12px;	line-height: 14px;	text-align: center; }
+
+/*******************
+	Footer
+*******************/
+p.footer {	font-size: 10px;	margin: 20px;	color:#aaa; text-align:center; line-height:1.2em;}
+
+
+
+.flashes { color: black; font-weight: bold; font-size:12px; list-style-type: none; margin: 0; padding: 0; }

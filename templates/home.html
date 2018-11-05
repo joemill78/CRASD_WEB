@@ -1,0 +1,263 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <div class="dualspan">
+    <div class="dualspan_tabs_level1"></div>
+    <div class="dualspan_tabs_level2"></div>
+    <div class="dualspan_tabs_level3"></div>
+    <div class="dualspan_middle">
+        <h2>Device Records</h2>
+	    <h4 style="word-wrap: break-word;">Current&nbsp;Device:&nbsp;&nbsp;<strong>[{{ output.name }}]</strong></h4>
+
+
+	<h3>Device Information:</h3>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      {% if message == 'Device Info Updated' %}
+            <li class="flashes">{{ message }}</li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+	<table><tbody>
+        <tr>
+            <th width="1%">Server Id:</th>
+            <td>{{ output.device_id }}  </td>
+        </tr>
+		<tr>
+			<th width="1%">Status:</th>
+            <td>{{ output.status }}  </td>
+        </tr>
+        <tr>
+            <th width="1%">Ip&nbsp;Address:</th>
+            <td>{{ output.ip }}</td>
+        </tr>
+        <tr>
+            <th width="1%">Location:</th>
+            <td>{{ output.address }} {{ output.city }}, {{ output.state }} {{ output.zip }}</td>
+        </tr>
+        <tr>
+            <th width="1%">Download&nbsp;Speed:</th>
+            <td>{{ output.download_rate }} Mbps</td>
+        </tr>
+        <tr>
+            <th>Upload&nbsp;Speed:</th>
+            <td>{{ output.upload_rate }} Mbps</td>
+        </tr>
+   </tbody></table>
+
+    <table class="tablemaster">
+    <tbody>
+        <tr>
+            <td align="center"><button onclick=location.href="{{ url_for('edit_device_info') }}">Edit</button></td>
+        </tr>
+   </tbody>
+</table>
+<h3>System Information:</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <th witdh="1%">Operating&nbsp;System:</th>
+                    <td>{{ datums.os }}</td>
+                </tr>
+                <tr>
+                    <th width="1%">Kernel Version:</th>
+                    <td>{{ datums.kernel }}</td>
+                </tr>
+                <tr>
+                    <th width="1%">CPU Vendor:</th>
+                    <td>{{ datums.cpu_vendor }}</td>
+                </tr>
+                <tr>
+                    <th width="1%">CPU Model:</th>
+                    <td>{{ datums.cpu_model }}</td>
+                </tr>
+                <tr>
+                    <th width="1%">Total RAM:</th>
+                    <td>{{ mem_to_g(datums.mem) }} GB</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+
+<h4 style="color: #ff7200;font-size: inherit;">Monitored Devices:</h4>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      {% if 'Monitoring' in message  %}
+        <li class="flashes">{{ message }}</li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<div style="overflow-x:auto">
+   <table id="devices" style="font-size:12px;" class="display" cellpadding="0" cellspacing="0" border="0">
+   <thead>
+		<tr><th style="width:22px;"></th>
+            <th style="width:80px; text-align: center;">Id</th>
+			<th style="width:80px; text-align: center;">Name</th>
+			<th style="width:150px; text-align: center;">IP Address</th>
+			<th style="width:100px; text-align: center;">Monitor</th>
+            <th style="width:100px; text-align: center;">Action</th>
+
+		</tr>
+    </thead>
+    <tfoot>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+    </tfoot>
+	<tbody><tr class="webform">
+		{% for device in monitored_devices %}
+        <td>{{ loop.index }}</td>
+        <td>{{ device.id }}</td>
+		<td>{{ device.name }}</td>
+        <td>{{ device.ip }}</td>
+        <td>{{ device.monitor }}</td>
+            <td><a href ="{{ url_for('edit_mon_device', device_id = device.id) }}">Edit</a> | <a href ="{{ url_for('delete_mon_device', device_id = device.id) }}">Del</a> </td>
+        </tr>
+    {% endfor %}
+	</tbody>
+	</table>
+<table class="tablemaster">
+    <tbody>
+        <tr>
+            <td align="center"><button onclick=location.href="{{ url_for('add_mon_device') }}">Add</button></td>
+        </tr>
+   </tbody>
+</table>
+
+</div>
+
+<!-- <div style="float:left;"></div><div style="float:right;"></div> -->
+            <h4 style="color: #ff7200;font-size: inherit;">Network Interface Card Status:</h4>
+
+<div style="overflow-x:auto">
+   <table id="interfaces" style="font-size:12px;" class="display" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+    <tr>
+	<th style="width:22px;"></th>
+		<th style="width:80px; text-align: center;">Name</th>
+		<th style="width:150px; text-align: center;">Duplex Mode</th>
+        <th style="width:150px; text-align: center;">Auto Negotiation</th>
+		<th style="width:100px; text-align: center;">Speed</th>
+		<th style="width:190px; text-align: center;">Link</th>
+	</tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+
+            </tr>
+        </tfoot>
+			<tbody><tr class="webform">
+                {% for k, v in interface_status.items() %}
+                    <td>{{ loop.index }}</td>
+                    <td>{{ k }}</td>
+                    <td>{{ v['duplex'] }}</td>
+                    <td>{{ v['auto'] }}</td>
+                    <td>{{ v['speed'] }}</td>
+                    <td>{{ v['link'] }}</td>
+                    </tr>
+                {% endfor %}
+	        </tbody>
+   </table>
+</div><br>
+<br>
+<h3>Active Monitoring Events:</h3>
+<div style="overflow-x:auto">
+   <table id="events" style="font-size:12px;" class="display" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+    <tr>
+	<th style="width:22px;"></th>
+		<th style="width:300px; text-align: center;">Event ID</th>
+		<th style="width:150px; text-align: center;">Event Type</th>
+		<th style="width:100px; text-align: center;">Resource</th>
+		<th style="width:190px; text-align: center;">Start Time</th>
+	</tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </tfoot>
+		<tbody><tr class="webform">
+			{% for event in active_mon_events %}
+            <td>{{ loop.index }}</td>
+			<td>{{ event.event_id }}</td>
+			<td>{{ event.name }}</td>
+			<td>{{ event.identifier }}</td>
+			<td>{{ event.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+			</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+</div><br>
+
+<div style="float:left;"></div><div style="float:right;"></div>
+
+<br>
+<h3>Active Reachability Events:</h3>
+<div style="overflow-x:auto">
+   <table id="active_events" style="font-size:12px;" class="display" cellpadding="0" cellspacing="0" border="0">
+        <thead>
+    <tr>
+	<th style="width:22px;"></th>
+		<th style="width:300px; text-align: center;">Event ID</th>
+		<th style="width:150px; text-align: center;">Device Name</th>
+		<th style="width:100px; text-align: center;">IP Address</th>
+		<th style="width:190px; text-align: center;">Start Time</th>
+	</tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </tfoot>
+
+		<tbody><tr class="webform">
+			{% for event in active_reachability_events %}
+            <td>{{ loop.index }}</td>
+            <td>{{ event.event_id }}</td>
+            <td>{{ event.name }}</td>
+            <td>{{ event.ip }}</td>
+            <td>{{ event.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+             {% endfor %}
+		</tbody>
+	</table>
+</div>
+<br>
+    <div style="float:left;"></div><div style="float:right;"></div>
+
+</div><!
+    </div>
+{% endblock content %}

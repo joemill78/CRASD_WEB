@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="dualspan">
+    <div class="dualspan_tabs_level1"></div>
+    <div class="dualspan_tabs_level2"></div>
+    <div class="dualspan_tabs_level3"></div>
+    <div class="dualspan_middle">
+    <h2>Edit Device Records</h2>
+    <form action="#" method = 'post'>
+    {{ form.csrf_token }}
+        <table>
+            <tbody>
+                <tr>
+                    <th width="1%">Server Id:</th>
+                    <td>{{ output.device_id }}  </td>
+                </tr>
+                <tr>
+                    <th width="1%">Status:</th>
+                    <td>
+                        <!--<input type='text' size='30' name="status" placeholder= '{{ output.status }}' > -->
+                        <select name="status" id="status">
+                            <option value="Up"{% if output.status == 'Up' %} selected="selected"{% endif %}>Up</option>
+                            <option value="Down"{% if output.status == 'Down' %} selected="selected"{% endif %}>Down</option>
+                            <option value="Installing"{% if output.status == 'Installing' %} selected="selected"{% endif %}>Installing</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="1%">Ip&nbsp;Address:</th>
+                    <td><input type='text' size='30' name="ip" id="ip" placeholder='{{ output.ip }}' value="{{ output.ip }}">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.ip.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="1%">Address:</th>
+                    <td><input type='text' size='30' id="address" name="address" placeholder='{{ output.address }}' value="{{ output.address }}">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.address.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="1%">City:</th>
+                    <td><input type='text' size='30' id="city "name="city" placeholder='{{ output.city }}' value="{{ output.city }}">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.city.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="1%">State:</th>
+                    <td><input type='text' size='30' id="state" name="state" placeholder='{{ output.state }}' value="{{ output.state }}">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.state.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="1%">Zip:</th>
+                    <td><input type='text' size='30' id="zip" name="zip" placeholder='{{ output.zip }}' value="{{ output.zip }}">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.zip.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="1%">Country:</th>
+                    <td><input type='text' size='30' id="country"  name="country" placeholder='{{ output.country }}' value="{{ output.country }}">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.country.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="1%">Phone:</th>
+                    <td><input type='text' size='30' id="phone" name="phone" placeholder='{{ output.phone }}' value="{{ output.phone }}">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.phone.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="1%">Download Speed:</th>
+                    <td><input type='text' size='30' id="download" name="download" placeholder={{ output.download_rate }} value="{{ output.download_rate }}"> Mbps
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.download.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Upload Speed:</th>
+                    <td><input type='text' size='30' id="upload" name="upload" placeholder={{ output.upload_rate }} value="{{ output.upload_rate }}"> Mbps
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.upload.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    <input type='submit' name="submit_button" value='Save'>
+    <input type="submit" name="submit_button" value='Cancel'>
+
+    </form>
+    </div>
+    </div>
+{% endblock content %}

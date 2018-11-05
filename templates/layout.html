@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html class="main">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Crasd Management Dashboard</title>
+	<link href="../static/base.css" rel="stylesheet" type="text/css" media="screen,projector">
+	<link href="../static/custom.css" rel="stylesheet" type="text/css" media="screen,projector">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js' type="text/javascript"></script>
+
+</head>
+
+<body data-gr-c-s-loaded="true"><div id="main" style="visibility: hidden; position: absolute; overflow: hidden; padding: 0px; width: 0px; left: 0px; top: 0px;"></div>
+
+
+<!-- refresh after 15 mins -->
+<meta http-equiv="Refresh" content="2701">
+	<div class="page_container">
+		<div id="universal_links">
+			<div class="text_right small">
+			<a href="help.html">Help</a><span class="top_link_spacer">|</span>
+			<a href="log_out.html" onclick="return confirm(&#39;Are you sure you want to log out?&#39;);">Log Out</a>
+			</div>
+		</div>
+		<div id="navbar">
+			<div id="department">Crasd Management Portal</div>
+				<div class="clearfloat"></div>
+		</div>
+		<ul id="main_hnav"><li class="active"><a href="{{ url_for('dashboard') }}">Home</a></li><li><a href="{{ url_for('charts') }}">Charts</a></li><li><a href="{{ url_for('events') }}">Events</a></li></ul>
+		<div class="clear"></div>
+	<div class="content">
+		<div class="contentbox_top"></div>
+			<div class="contentbox_middle">
+				<div class="dualspan">
+					<div class="dualspan_top"></div>
+					<div class="dualspan_middle">
+					<div class="left_col_half">
+
+
+
+                        <h1>{{ output.name }}</h1>
+						<p class="quiet">{{ output.address }}<br>{{ output.city }}, {{ output.state }} {{ output.zip }},&nbsp;{{ output.country }}<br>
+						{{ output.phone }}<br>
+						<p></p>
+
+					</div>
+
+
+
+	<div class="right_col_half">
+	   <table class="th_right nopadtop nopadbottom" align="right">
+	   <tbody><tr class="">
+		<th>Current&nbsp;Status:</th>
+		<td colspan="3"><div class="check">{{ output.status }}</div></td>
+	   </tr>
+	   <tr class="">
+			  <th>Server&nbsp;Id:&nbsp;</th>
+			  <td>{{ output.device_id }}</td>
+			  <th>Server Name:&nbsp;</th>
+			  <td>{{ output.name }}</td>
+			 </tr>
+	   <tr class="">
+			  <th>Distribution:&nbsp;</th>
+			  <td>{{ split_line(datums.os)[0] }}</td>
+			  <th>Kernel Version:&nbsp;</th>
+			  <td>{{ datums.kernel }}</td>
+	   </tr>
+	   <tr class="">
+		<th>Download Speed:&nbsp;</th>
+		<td>{{ output.download_rate }} Mbps</td>
+		<th>Upload Speed:&nbsp;</th>
+		<td>{{ output.upload_rate }} Mbps</td>
+	   </tr>
+	   <tr class="">
+
+	   </tr>
+		 </tbody></table>
+
+	</div>
+
+
+<div class="clear"></div>
+                    </div>
+                <div class="dualspan_bottom"></div></div>
+
+
+ {% block content %}{% endblock %}
+
+<div style="float:left;"></div><div style="float:right;"></div>
+
+<br>
+
+
+</div><!-- end content middle -->
+<div class="clear"></div>
+<div class="contentbox_bottom"></div>
+</div> <!-- end content -->
+
+<p class="footer">
+			<br>Cras Monitoring Portal Version: 1.0 <br>
+
+			</p>
+<p class="footer">All rights reserved. Crasd Monitoring system Intellectual Property.</p>
+			</div> <!-- end page_container -->
+
+
+
+</body>
+</html>

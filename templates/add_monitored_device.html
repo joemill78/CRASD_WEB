@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="dualspan">
+    <div class="dualspan_tabs_level1"></div>
+    <div class="dualspan_tabs_level2"></div>
+    <div class="dualspan_tabs_level3"></div>
+    <div class="dualspan_middle">
+        <h2>Add Monitored Device</h2>
+        <form action="#" method = 'post'>
+            {{ form.csrf_token }}
+            <table>
+                <tbody>
+                <tr>
+                    <th width="1%"><label for="id" class="label">Device&nbsp;Id:</label></th>
+                    <td>
+                       <input type='text' size='30' id="id" name="id">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.id.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+
+
+                </tr>
+
+                <tr>
+                    <th width="1%"><label for="ip" class="label">Device&nbsp;IP&nbsp;Address:</label></th>
+                    <td>
+                        <input type='text' size='30' name="ip" id="ip">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.ip.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+
+
+                </tr>
+
+                <tr>
+                    <th width="1%"><label for="name" class="label">Device&nbsp;Name:</label></th>
+                    <td>
+                       <input type='text' size='30' name="name" id="name">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+
+
+                </tr>
+
+                <tr>
+                    <th width="1%">Monitor:</th>
+                    <td><select name="monitored" id="monitoring" title="monitor">
+                        <option value="Yes" selected="selected">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        <input type='submit' name="submit_button" value='Save'>
+        <input type="submit" name="submit_button" value="Cancel">
+        </form>
+
+
+    </div>
+    </div>
+{% endblock content %}
