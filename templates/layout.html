@@ -18,10 +18,12 @@
 		<div id="universal_links">
 			<div class="text_right small">
 			<a href="help.html">Help</a><span class="top_link_spacer">|</span>
-			<a href="log_out.html" onclick="return confirm(&#39;Are you sure you want to log out?&#39;);">Log Out</a>
+			<a href="{{ url_for('logout') }}" onclick="return confirm(&#39;Are you sure you want to log out?&#39;);">Log Out</a>
 			</div>
 		</div>
 		<div id="navbar">
+            <div id="logo"><img src="../static/img/logo.png" style="background-repeat:no-repeat; width: 70px; float:left;"></div>
+
 			<div id="department">Crasd Management Portal</div>
 				<div class="clearfloat"></div>
 		</div>

@@ -1,5 +1,5 @@
 from __future__ import division
-from flask import Flask, render_template, request, redirect, url_for, flash, Markup
+from flask import Flask, render_template, request, redirect, url_for, flash, Markup, session
 from database import DB
 from flask_wtf import FlaskForm
 from wtforms import StringField
@@ -94,6 +94,9 @@ def events():
 @app.route("/")
 @app.route("/home")
 def dashboard():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+
     pg = DB()
     pg.connect()
     # Get device Info
@@ -280,6 +283,21 @@ def charts():
     return render_template('charts.html', output=output, datums=datums, mem_to_meg=mem_to_meg,
                            split_line=split_line, values=values, labels=labels, legend=legend,
                            values2=values2, labels2=labels2, legend2=legend2)
+
+
+@app.route('/login', methods=['POST'])
+def user_login():
+    if request.form['password'] == 'password' and request.form['username'] == 'admin':
+        session['logged_in'] = True
+    else:
+        flash('wrong credentials')
+    return dashboard()
+
+
+@app.route('/logout')
+def logout():
+    session['logged_in'] = False
+    return dashboard()
 
 
 if __name__ == "__main__":
