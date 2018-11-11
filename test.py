@@ -8,17 +8,12 @@ def mem_to_g(value):
 def main():
     pg = DB()
     pg.connect()
-    data = pg.get_mem_utilized()
+    data = pg.get_password('jmillan')
+    if data:
+        print data[0]
+    else:
+        print "user not found"
 
-    labels = []
-    values = []
-
-    for line in data:
-        values.append(mem_to_g(line[0]))
-        labels.append(line[1].strftime('%Y-%m-%d %H:%M:%S'))
-
-    print values
-    print labels
     pg.close()
 
 

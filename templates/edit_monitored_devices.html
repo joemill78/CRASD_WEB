@@ -6,54 +6,61 @@
     <div class="dualspan_tabs_level3"></div>
     <div class="dualspan_middle">
     <h2>Edit Monitored Devices</h2>
-    <script type="text/javascript">
-        function get_response(response) {
-            document.getElementById("monitoring").value = response.value;
 
-        }
-    </script>
-    <div style="overflow-x:auto">
-    <form action="#" method="post">
-   <table id="monitored_devices" style="font-size:12px;" class="display" cellpadding="0" cellspacing="0" border="0">
-   <thead>
-		<tr><th style="width:22px;"></th>
-            <th style="width:80px; text-align: center;">Id</th>
-			<th style="width:80px; text-align: center;">Name</th>
-			<th style="width:150px; text-align: center;">IP Address</th>
-			<th style="width:100px; text-align: center;">Monitor</th>
-		</tr>
-    </thead>
-    <tfoot>
-        <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        </tr>
-    </tfoot>
-	<tbody><tr class="webform">
+   <form action="#" method = 'post'>
+            {{ form.csrf_token }}
+            <table>
+                <tbody>
+                <tr>
+                    <th width="1%"><label for="id" class="label">Device&nbsp;Id:</label></th>
+                    <td>
+                       {{ monitored_device.id }}
+                    </td>
 
-        <td>1. </td>
-        <td>{{ monitored_device.id }}</td>
-		<td><input type="text" size="30" name=name placeholder="{{ monitored_device.name }}"></td>
-        <td><input type="text" size="30" name=ip placeholder="{{ monitored_device.ip }}"></td>
-        <td><select name="monitored" id="monitoring">
-                <option value="Yes"{% if monitored_device.monitor == 'Yes' %} selected="selected"{% endif %}>Yes</option>
-                <option value="No"{% if monitored_device.monitor == 'No' %} selected="selected"{% endif %}>No</option>
-            </select>
-        </td>
 
-        </tr>
+                </tr>
 
-	</tbody>
-	</table>
+                <tr>
+                    <th width="1%"><label for="ip" class="label">Device&nbsp;IP&nbsp;Address:</label></th>
+                    <td>
+                        <input type='text' size='30' name="ip" id="ip" value="{{ monitored_device.ip }}">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.ip.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
 
-    <input type='submit' name="submit_button" value='Save'>
-    <input type="submit" name="submit_button" value="Cancel">
 
-    </form>
-</div>
+                </tr>
+
+                <tr>
+                    <th width="1%"><label for="name" class="label">Device&nbsp;Name:</label></th>
+                    <td>
+                       <input type='text' size='30' name="name" id="name" value="{{ monitored_device.name }}">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+
+
+                </tr>
+
+                <tr>
+                    <th width="1%">Monitor:</th>
+                    <td><select name="monitored" id="monitoring" title="monitor">
+                        <option value="Yes" {% if monitored_device.monitor == 'Yes' %} selected="selected" {% endif %}>Yes</option>
+                        <option value="No"{% if monitored_device.monitor == 'No' %} selected="selected" {% endif %}>No</option>
+                    </select>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        <input type='submit' name="submit_button" value='Save'>
+        <input type="submit" name="submit_button" value="Cancel">
+        </form>
 
     </div>
     </div>

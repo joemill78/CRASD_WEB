@@ -341,6 +341,29 @@ class DB(object):
         except (Exception, psycopg2.DatabaseError) as error:
             print error
 
+    def get_password(self, username):
+        try:
+            cursor = self.conn.cursor()
+            sql = 'select password from users where username = (%s)'
+            cursor.execute(sql, (username,))
+            row = cursor.fetchone()
+            cursor.close()
+            return row
+        except (Exception, psycopg2.DatabaseError) as error:
+            print error
+
+    def add_user(self, username, pwd):
+        try:
+            cursor = self.conn.cursor()
+            sql = 'insert into users (username, password) values(%s, %s)'
+            cursor.execute(sql, (username, pwd))
+            self.conn.commit()
+            cursor.close()
+
+        except (Exception, psycopg2.DatabaseError) as error:
+            print error
+
+
 if __name__ == '__main__':
     pg = DB()
     pg.connect()

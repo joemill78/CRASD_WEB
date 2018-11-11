@@ -82,3 +82,4 @@ box-shadow: none;
 }
 
 .red_flash { color: red; font-size:12px; list-style-type: none; margin: 0; padding: 0; }
+.title_login { float:left; border-left:1px solid lightgrey; font-size: 23px; font-weight: bold; }

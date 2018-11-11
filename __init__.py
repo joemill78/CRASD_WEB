@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired, NumberRange, Optional, Length, IPAddress
 #from wtforms_components import IntegerField
-
+from password_manager import PW_MANAGER
 app = Flask(__name__)
 app.secret_key ='s3cr3t'
 
@@ -15,6 +15,9 @@ class ValidateMonDevice(FlaskForm):
     ip = StringField("ip", validators=[DataRequired(), IPAddress()])
     name = StringField("name", validators=[DataRequired(), Length(max=30)])
 
+class ValidateEditMonDevice(FlaskForm):
+    ip = StringField("ip", validators=[DataRequired(), IPAddress()])
+    name = StringField("name", validators=[DataRequired(), Length(max=30)])
 
 class ValidateDeviceRecords(FlaskForm):
     ip = StringField("ip", validators=[DataRequired(), IPAddress()])
@@ -46,7 +49,8 @@ def mem_to_g(value):
 
 @app.route("/events", methods=['GET', 'POST'])
 def events():
-
+    if not session.get('logged_in'):
+        return render_template('login.html')
     pg = DB()
     pg.connect()
     monitoring = pg.get_all_h_mon_events()
@@ -81,7 +85,7 @@ def events():
                 change = True
 
         if change:
-            flash("Monitoring Event Updated")
+            flash("{0} Monitoring Event Updated".format(event_list))
             return redirect(url_for('events'))
 
     return render_template('events.html', monitoring=monitoring, reachability=reachability,output=output,
@@ -116,6 +120,8 @@ def dashboard():
 
 @app.route("/device/edit", methods=['GET', 'POST'])
 def edit_device_info():
+    if not session.get('logged_in'):
+        return render_template('login.html')
     pg = DB()
     pg.connect()
     output = pg.get_device_info()
@@ -127,30 +133,42 @@ def edit_device_info():
         if request.form['submit_button'] == 'Cancel':
             return redirect(url_for('dashboard'))
         elif request.form['submit_button'] == 'Save':
+            items_updated = ""
             if form.validate_on_submit():
-                if request.form.get('status'):
+                if request.form.get('status') != output['status']:
                     device['status'] = request.form.get('status')
-                if form.ip.data:
+                    items_updated += ' Status '
+                if form.ip.data != output['ip']:
                     device['ip_address'] = form.ip.data
-                if form.download.data:
+                    items_updated += ' IP Address '
+                if form.download.data.strip() != str(output['download_rate']):
                     device['download_rate'] = form.download.data
-                if form.upload.data:
+                    items_updated += ' Download Rate '
+                if form.upload.data != str(output['upload_rate']):
                     device['upload_rate'] = form.upload.data
-                if form.address.data:
+                    items_updated += ' Upload Rate '
+                if form.address.data != output['address']:
                     device['address'] = form.address.data
-                if form.city.data:
+                    items_updated += ' Address '
+                if form.city.data != output['city']:
                     device['city'] = form.city.data
-                if form.state.data:
+                    items_updated += ' City '
+                if form.state.data != output['state']:
                     device['state'] = form.state.data
-                if form.country.data:
+                    items_updated += ' State '
+                if form.country.data != output['country']:
                     device['country'] = form.country.data
-                if form.zip.data:
+                    items_updated += ' Country '
+                if form.zip.data != output['zip']:
                     device['zip'] = form.zip.data
+                    items_updated += ' Zip Code '
 
                 if device:
                     pg.update_device(device) # we send data to postgres here
-                    flash("Device Info Updated")
-                    return redirect(url_for('dashboard'))
+                    flash("Device Info Updated: " + items_updated)
+                else:
+                    flash("Device Info: No Changes Detected")
+                return redirect(url_for('dashboard'))
             return render_template('edit_device_info.html', output=output, datums=datums,
                                    split_line=split_line, to_mbps=to_mbps, mem_to_g=mem_to_g, form=form)
     else:
@@ -160,6 +178,8 @@ def edit_device_info():
 
 @app.route("/device/add", methods=['GET', 'POST'])
 def add_mon_device():
+    if not session.get('logged_in'):
+        return render_template('login.html')
     pg = DB()
     pg.connect()
     output = pg.get_device_info()
@@ -186,7 +206,7 @@ def add_mon_device():
 
                 if device:
                     pg.insert_mon_device(device) # we send data to postgres here
-                    flash("Monitored Device Added")
+                    flash("Monitored Device {0} Added".format(form.name.data))
                     return redirect(url_for('dashboard'))
             return render_template('add_monitored_device.html', output=output, datums=datums,
                                    split_line=split_line, to_mbps=to_mbps, mem_to_g=mem_to_g, form=form)
@@ -198,6 +218,8 @@ def add_mon_device():
 
 @app.route("/<device_id>/edit", methods=['GET', 'POST'])
 def edit_mon_device(device_id):
+    if not session.get('logged_in'):
+        return render_template('login.html')
     pg = DB()
     pg.connect()
     output = pg.get_device_info()
@@ -205,37 +227,47 @@ def edit_mon_device(device_id):
     monitored_device = pg.get_monitored_device(device_id)
 
     update = {}
-
+    form = ValidateEditMonDevice()
     if request.method == 'POST':
         if request.form['submit_button'] == 'Cancel':
             return redirect(url_for('dashboard'))
         elif request.form['submit_button'] == 'Save':
-            if request.form['name']:
-                update['identifier'] = request.form['name']
-                # print "need to update", request.form['name']
-            if request.form['ip']:
-                update['target_ip_address'] = request.form['ip']
-                # print "need to update", request.form['ip']
 
-            if request.form.get('monitored'):
-                monitor = request.form.get('monitored')
-                if monitor != monitored_device['monitor']:
-                    update['monitor'] = request.form.get('monitored')
-                    # print "need to update", request.form.get('monitored')
+            if form.validate_on_submit():
+                if request.form.get('name') != monitored_device['name']:
+                    update['identifier'] = request.form.get('name')
+                    # print "need to update", request.form['name']
+                if request.form.get('ip') != monitored_device['ip']:
+                    update['target_ip_address'] = request.form.get('ip')
+                    # print "need to update", request.form['ip']
 
-            if update:
-                pg.update_mon_device(update, device_id)
-                flash("Monitored Device Updated")
+                if request.form.get('monitored'):
+                    monitor = request.form.get('monitored')
+                    if monitor != monitored_device['monitor']:
+                        update['monitor'] = request.form.get('monitored')
+                        # print "need to update", request.form.get('monitored')
 
-        return redirect(url_for('dashboard'))
+                if update:
+                    pg.update_mon_device(update, device_id)
+                    flash('Monitored Device {0} Updated'.format(device_id))
+                else:
+                    flash('Monitored Device: No Changes Detected')
+
+                return redirect(url_for('dashboard'))
+
+            return render_template('edit_monitored_devices.html', output=output, datums=datums,
+                                    split_line=split_line, to_mbps=to_mbps, mem_to_g=mem_to_g,
+                                    monitored_device=monitored_device, form=form)
     else:
         return render_template('edit_monitored_devices.html', output=output, datums=datums,
                                split_line=split_line, to_mbps=to_mbps, mem_to_g=mem_to_g,
-                               monitored_device=monitored_device)
+                               monitored_device=monitored_device, form=form)
 
 
 @app.route('/<device_id>/delete', methods=['GET', 'POST'])
 def delete_mon_device(device_id):
+    if not session.get('logged_in'):
+        return render_template('login.html')
     pg = DB()
     pg.connect()
     output = pg.get_device_info()
@@ -249,7 +281,7 @@ def delete_mon_device(device_id):
             return redirect(url_for('dashboard'))
         elif request.form['submit_button'] == 'Delete':
             pg.delete_mon_device(device_id)
-            flash("Monitored Device Deleted")
+            flash("Monitored Device: " + device_id + " Deleted")
             return redirect(url_for('dashboard'))
     else:
         return render_template('delete_mon_device.html', output=output, datums=datums,
@@ -259,6 +291,8 @@ def delete_mon_device(device_id):
 
 @app.route('/charts', methods=['GET', 'POST'])
 def charts():
+    if not session.get('logged_in'):
+        return render_template('login.html')
     pg = DB()
     pg.connect()
     output = pg.get_device_info()
@@ -287,10 +321,16 @@ def charts():
 
 @app.route('/login', methods=['POST'])
 def user_login():
-    if request.form['password'] == 'password' and request.form['username'] == 'admin':
+    pm = PW_MANAGER()
+    username = request.form['username'].encode('utf-8')
+    password = request.form['password'].encode('utf-8')
+    # print username, password
+    if pm.validate(username, password):
+
         session['logged_in'] = True
+        return redirect(url_for('dashboard'))
     else:
-        flash('wrong credentials')
+        flash('Invalid username or password. Please try again!')
     return dashboard()
 
 

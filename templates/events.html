@@ -10,13 +10,13 @@
     <h2>Available Monitoring Events:</h2>
     {% with messages = get_flashed_messages() %}
   {% if messages %}
-    <ul class=flashes>
+
     {% for message in messages %}
       {% if 'Event' in message  %}
-        <li class="flashes">{{ message }}</li>
+        <div class="msg_outer"><div class="success_inner">{{ message }}</div></div>
         {% endif %}
     {% endfor %}
-    </ul>
+
   {% endif %}
 {% endwith %}
 <div style="overflow-x:auto">

@@ -13,13 +13,12 @@
 	<h3>Device Information:</h3>
     {% with messages = get_flashed_messages() %}
   {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      {% if message == 'Device Info Updated' %}
-            <li class="flashes">{{ message }}</li>
+     {% for message in messages %}
+      {% if 'Device Info' in message %}
+          <div class="msg_outer"><div class="success_inner">{{ message }}</div></div>
+
         {% endif %}
     {% endfor %}
-    </ul>
   {% endif %}
 {% endwith %}
 	<table><tbody>
@@ -87,13 +86,12 @@
 <h4 style="color: #ff7200;font-size: inherit;">Monitored Devices:</h4>
 {% with messages = get_flashed_messages() %}
   {% if messages %}
-    <ul class=flashes>
     {% for message in messages %}
-      {% if 'Monitoring' in message  %}
-        <li class="flashes">{{ message }}</li>
+      {% if 'Monitored Device' in message  %}
+        <div class="msg_outer"><div class="success_inner">{{ message }}</div></div>
         {% endif %}
     {% endfor %}
-    </ul>
+
   {% endif %}
 {% endwith %}
 <div style="overflow-x:auto">
