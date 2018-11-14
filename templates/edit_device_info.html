@@ -15,6 +15,17 @@
                     <td>{{ output.device_id }}  </td>
                 </tr>
                 <tr>
+                    <th width="1%">Name:</th>
+                    <td><input type='text' size='30' name="name" id="name" placeholder='{{ output.name }}' value="{{ output.name }}">
+                        <span style="color: red; padding-left: 10px;">
+                            {% for error in form.name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
                     <th width="1%">Status:</th>
                     <td>
                         <!--<input type='text' size='30' name="status" placeholder= '{{ output.status }}' > -->

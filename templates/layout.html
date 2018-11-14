@@ -13,7 +13,7 @@
 
 
 <!-- refresh after 5 mins -->
-<meta http-equiv="Refresh" content="300">
+<meta http-equiv="Refresh" content="3000">
 	<div class="page_container">
 		<div id="universal_links">
 			<div class="text_right small">
@@ -62,15 +62,17 @@
 			 </tr>
 	   <tr class="">
 			  <th>Distribution:&nbsp;</th>
-			  <td>{{ split_line(datums.os)[0] }}</td>
-			  <th>Kernel Version:&nbsp;</th>
+			  {% if datums %}
+              <td>{{ split_line(datums.os)[0] }}</td>
+              {% endif %}
+			  <th>Kernel&nbsp;Version:&nbsp;</th>
 			  <td>{{ datums.kernel }}</td>
 	   </tr>
 	   <tr class="">
-		<th>Download Speed:&nbsp;</th>
-		<td>{{ output.download_rate }} Mbps</td>
-		<th>Upload Speed:&nbsp;</th>
-		<td>{{ output.upload_rate }} Mbps</td>
+		<th>Download&nbsp;Speed:&nbsp;</th>
+		<td>{{ output.download_rate }}&nbsp;Mbps</td>
+		<th>Upload&nbsp;Speed:&nbsp;</th>
+		<td>{{ output.upload_rate }}&nbsp;Mbps</td>
 	   </tr>
 	   <tr class="">
 
