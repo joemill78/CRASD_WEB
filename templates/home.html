@@ -27,27 +27,39 @@
 	<table><tbody>
         <tr>
             <th width="1%">Server Id:</th>
+            {% if output %}
             <td>{{ output.device_id }}  </td>
+            {% endif %}
         </tr>
 		<tr>
 			<th width="1%">Status:</th>
+            {% if output %}
             <td>{{ output.status }}  </td>
+            {% endif %}
         </tr>
         <tr>
             <th width="1%">Ip&nbsp;Address:</th>
+            {% if output %}
             <td>{{ output.ip }}</td>
+            {% endif %}
         </tr>
         <tr>
             <th width="1%">Location:</th>
+            {% if output %}
             <td>{{ output.address }} {{ output.city }}, {{ output.state }} {{ output.zip }}</td>
+            {% endif %}
         </tr>
         <tr>
             <th width="1%">Download&nbsp;Speed:</th>
+            {% if output %}
             <td>{{ output.download_rate }} Mbps</td>
+            {% endif %}
         </tr>
         <tr>
             <th>Upload&nbsp;Speed:</th>
+            {% if output %}
             <td>{{ output.upload_rate }} Mbps</td>
+            {% endif %}
         </tr>
    </tbody></table>
 

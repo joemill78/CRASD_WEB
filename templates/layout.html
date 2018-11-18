@@ -38,11 +38,12 @@
 					<div class="left_col_half">
 
 
-
+                        {% if output %}
                         <h1>{{ output.name }}</h1>
 						<p class="quiet">{{ output.address }}<br>{{ output.city }}, {{ output.state }} {{ output.zip }},&nbsp;{{ output.country }}<br>
 						{{ output.phone }}<br>
 						<p></p>
+                        {% endif %}
 
 					</div>
 
@@ -56,9 +57,13 @@
 	   </tr>
 	   <tr class="">
 			  <th>Server&nbsp;Id:&nbsp;</th>
-			  <td>{{ output.device_id }}</td>
-			  <th>Server Name:&nbsp;</th>
-			  <td>{{ output.name }}</td>
+			{% if output %}
+           <td>{{ output.device_id }}</td>
+			{% endif %}
+           <th>Server Name:&nbsp;</th>
+			{% if output %}
+           <td>{{ output.name }}</td>
+            {% endif %}
 			 </tr>
 	   <tr class="">
 			  <th>Distribution:&nbsp;</th>
@@ -66,13 +71,19 @@
               <td>{{ split_line(datums.os)[0] }}</td>
               {% endif %}
 			  <th>Kernel&nbsp;Version:&nbsp;</th>
-			  <td>{{ datums.kernel }}</td>
+			  {% if datums %}
+              <td>{{ datums.kernel }}</td>
+              {% endif %}
 	   </tr>
 	   <tr class="">
 		<th>Download&nbsp;Speed:&nbsp;</th>
-		<td>{{ output.download_rate }}&nbsp;Mbps</td>
+		    {% if output %}
+           <td>{{ output.download_rate }}&nbsp;Mbps</td>
+           {% endif %}
 		<th>Upload&nbsp;Speed:&nbsp;</th>
-		<td>{{ output.upload_rate }}&nbsp;Mbps</td>
+		    {% if output %}
+           <td>{{ output.upload_rate }}&nbsp;Mbps</td>
+            {% endif %}
 	   </tr>
 	   <tr class="">
 
