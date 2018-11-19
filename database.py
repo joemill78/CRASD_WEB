@@ -2,6 +2,7 @@ import psycopg2
 import collections
 
 
+# This class is used for all interaction with postgres from the Crasd Web Interface
 class DB(object):
     def __init__(self):
         self.db = 'cdb'
