@@ -5,7 +5,7 @@ light blue : 	  3aa5dc
 dark: 			  067ab4
 */
 
-html {height: 100%;margin-bottom: 1px;/* Scroll Bar Fix by Patrick Lauke VIA Jon Hicks */	}
+html {height: 100%;margin-bottom: 1px;	}
 body {margin:0px;font-family:Verdana, Geneva, sans-serif;font-size:14px;background-repeat:repeat-x;color:#333333;line-height:1.3em;}
 
 /*******************

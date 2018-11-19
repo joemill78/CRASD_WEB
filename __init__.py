@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.secret_key ='s3cr3t'
 
 
+# Validation classes using wtforms
 class ValidateMonDevice(FlaskForm):
     id = StringField("id", validators=[DataRequired(), Length(max=10)])
     ip = StringField("ip", validators=[DataRequired(), IPAddress()])
@@ -33,6 +34,7 @@ class ValidateDeviceRecords(FlaskForm):
     name = StringField("name", validators=[DataRequired(), Length(max=20)])
 
 
+# helper function to convert mem integer from linux system to Megs
 def mem_to_meg(value):
     if value:
         return round(int(value) / 1024)
@@ -44,18 +46,45 @@ def split_line(line):
     return line.split()
 
 
+# helper function to convert upload and download rate to Mbps
 def to_mbps(value):
     return value / 1000000
 
 
+# helper function to convert integer from system memory to Gigs
 def mem_to_g(value):
     return round(int(value) / 1024 / 1024)
+
+
+# Main route for home page
+@app.route("/")
+@app.route("/home")
+def dashboard():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+
+# Get data from Postgres
+    pg = DB()
+    pg.connect()
+    output = pg.get_device_info()
+    datums = pg.get_device_datums()
+    monitored_devices = pg.get_monitored_devices()
+    active_mon_events = pg.get_active_mon_events()
+    active_reachability_events = pg.get_active_reachability_events()
+    interface_status = pg.get_interface_status()
+
+    pg.close()
+    return render_template('home.html', output=output, datums=datums, mem_to_g=mem_to_g,
+                           split_line=split_line, to_mbps=to_mbps, monitored_devices=monitored_devices,
+                           active_mon_events=active_mon_events, active_reachability_events=active_reachability_events,
+                           interface_status=interface_status)
 
 
 @app.route("/events", methods=['GET', 'POST'])
 def events():
     if not session.get('logged_in'):
         return render_template('login.html')
+    # Get data from Postgres
     pg = DB()
     pg.connect()
     monitoring = pg.get_all_h_mon_events()
@@ -79,9 +108,7 @@ def events():
                 if key == 'monitor':
                     event_monitor.append(value)
 
-        # print selected
-        # print event_list
-        # print event_monitor
+        # validate if data changed
         change = False
         for answer_form, db_data, event_list in zip(selected, event_monitor, event_list):
             if answer_form != db_data:
@@ -100,33 +127,12 @@ def events():
                            interface_status=interface_status, available_mon_events=available_mon_events)
 
 
-@app.route("/")
-@app.route("/home")
-def dashboard():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-
-    pg = DB()
-    pg.connect()
-    # Get device Info
-    output = pg.get_device_info()
-    datums = pg.get_device_datums()
-    monitored_devices = pg.get_monitored_devices()
-    active_mon_events = pg.get_active_mon_events()
-    active_reachability_events = pg.get_active_reachability_events()
-    interface_status = pg.get_interface_status()
-
-    pg.close()
-    return render_template('home.html', output=output, datums=datums, mem_to_g=mem_to_g,
-                           split_line=split_line, to_mbps=to_mbps, monitored_devices=monitored_devices,
-                           active_mon_events=active_mon_events, active_reachability_events=active_reachability_events,
-                           interface_status=interface_status)
-
-
 @app.route("/device/edit", methods=['GET', 'POST'])
 def edit_device_info():
     if not session.get('logged_in'):
         return render_template('login.html')
+
+    # get data from postgres
     pg = DB()
     pg.connect()
     output = pg.get_device_info()
@@ -190,6 +196,8 @@ def edit_device_info():
 def add_mon_device():
     if not session.get('logged_in'):
         return render_template('login.html')
+
+    # get data from postgres
     pg = DB()
     pg.connect()
     output = pg.get_device_info()
@@ -230,6 +238,8 @@ def add_mon_device():
 def edit_mon_device(device_id):
     if not session.get('logged_in'):
         return render_template('login.html')
+
+    # get data from postgres
     pg = DB()
     pg.connect()
     output = pg.get_device_info()
@@ -354,6 +364,7 @@ def logout():
     return dashboard()
 
 
+# Routes used for downloading documents
 @app.route("/get_csv_device")
 def get_csv_device():
     pg = DB()

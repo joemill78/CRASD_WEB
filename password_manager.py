@@ -29,8 +29,8 @@ class PW_MANAGER(object):
 
 if __name__ == '__main__':
     pm = PW_MANAGER()
-    username = 'jmillan'
-    password = 'admin'
+    username = 'test'
+    password = 'test'
     #pm.hash_pwd(username, password)
     if pm.validate(username, password):
         print "password match"
