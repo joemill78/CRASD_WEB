@@ -5,6 +5,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired, NumberRange, Optional, Length, IPAddress
 from password_manager import PW_MANAGER
+import os
+import subprocess
+
 app = Flask(__name__)
 app.secret_key ='s3cr3t'
 
@@ -56,6 +59,17 @@ def mem_to_g(value):
     return round(int(value) / 1024 / 1024)
 
 
+def process_check(ps):
+    ps = subprocess.Popen("/usr/bin/pgrep " + ps, shell=True, stdout=subprocess.PIPE)
+    output = ps.stdout.read().strip()
+    ps.stdout.close()
+    ps.wait()
+    if output:
+        return True
+    else:
+        return False
+    
+
 # Main route for home page
 @app.route("/")
 @app.route("/home")
@@ -72,12 +86,13 @@ def dashboard():
     active_mon_events = pg.get_active_mon_events()
     active_reachability_events = pg.get_active_reachability_events()
     interface_status = pg.get_interface_status()
+    crasd = process_check('crasd')
 
     pg.close()
     return render_template('home.html', output=output, datums=datums, mem_to_g=mem_to_g,
                            split_line=split_line, to_mbps=to_mbps, monitored_devices=monitored_devices,
                            active_mon_events=active_mon_events, active_reachability_events=active_reachability_events,
-                           interface_status=interface_status)
+                           interface_status=interface_status, crasd=crasd)
 
 
 @app.route("/events", methods=['GET', 'POST'])

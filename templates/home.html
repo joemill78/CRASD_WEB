@@ -27,37 +27,37 @@
 	<table><tbody>
         <tr>
             <th width="1%">Server Id:</th>
-            {% if output %}
+            {% if output.device_id %}
             <td>{{ output.device_id }}  </td>
             {% endif %}
         </tr>
 		<tr>
 			<th width="1%">Status:</th>
-            {% if output %}
+            {% if output.status %}
             <td>{{ output.status }}  </td>
             {% endif %}
         </tr>
         <tr>
             <th width="1%">Ip&nbsp;Address:</th>
-            {% if output %}
+            {% if output.ip %}
             <td>{{ output.ip }}</td>
             {% endif %}
         </tr>
         <tr>
             <th width="1%">Location:</th>
-            {% if output %}
+            {% if output.address %}
             <td>{{ output.address }} {{ output.city }}, {{ output.state }} {{ output.zip }}</td>
             {% endif %}
         </tr>
         <tr>
             <th width="1%">Download&nbsp;Speed:</th>
-            {% if output %}
+            {% if output.download_rate %}
             <td>{{ output.download_rate }} Mbps</td>
             {% endif %}
         </tr>
         <tr>
             <th>Upload&nbsp;Speed:</th>
-            {% if output %}
+            {% if output.upload_rate %}
             <td>{{ output.upload_rate }} Mbps</td>
             {% endif %}
         </tr>
@@ -73,6 +73,15 @@
 <h3>System Information:</h3>
         <table>
             <tbody>
+                <tr>
+                    <th witdh="1%">Crasd&nbsp;Process:</th>
+                    {% if crasd %}
+                    <td><div class="check">Running</div></td>
+                    {% else %}
+                    <td><div class="cross">Not Running</div></td>
+                    {% endif %}
+                </tr>
+                <tr>
                 <tr>
                     <th witdh="1%">Operating&nbsp;System:</th>
                     <td>{{ datums.os }}</td>

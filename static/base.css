@@ -170,7 +170,7 @@ table.full {width:100%}
 .window{background:url(./img/btn_preview.gif);background-repeat:no-repeat;background-position:3px 5px !important;background-position:3px 5px ;line-height:17px;padding:2px 0 2px 21px;}
 .pdf{background:url(./img/btn_pdf.gif);background-repeat:no-repeat;background-position:3px 5px !important;background-position:3px 5px ;line-height:17px;padding:5px 0 0 21px;}
 .check {background:url(./icons/tick-circle-frame.png);background-repeat:no-repeat;line-height:17px;padding:0px 0 4px 25px;}
-
+.cross {background:url(./icons/cross-circle-frame.png);background-repeat:no-repeat;line-height:17px;padding:0px 0 4px 25px;}
 
 /*******************
 	Buttons
